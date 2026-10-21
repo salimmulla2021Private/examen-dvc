@@ -1,0 +1,35 @@
+stages:
+  prepare:
+    cmd: python src\data\data_processing.py
+    deps:
+    - data\raw_data
+    - src\data\data_loading.py
+    - src\data\data_processing.py
+    outs:
+    - data\processed
+  normalize:
+    cmd: python src\data\data_normalization.py
+    deps:
+    - data/processed
+    - src\data\data_normalization.py
+  best_parameters:
+    cmd: python src\data\model_best_parameters.py
+    deps:
+    - data\processed
+    - src\data\model_best_parameters.py
+    outs:
+    - models
+  training:
+    cmd: python src\data\data_training.py
+    deps:
+    - data\processed
+    - models
+    - src\data\data_training.py
+  evaluation:
+    cmd: python src\data\model_evaluation.py
+    deps:
+    - models
+    - data\processed
+    - src\data\model_evaluation.py
+    outs:
+    - metrics    

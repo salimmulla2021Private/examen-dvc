@@ -1,9 +1,17 @@
 
 import os
+from typing import IO
 
+from anyio import Path
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+
+
+def load_data(data_path: str | Path | IO[bytes]) -> pd.DataFrame:
+    """Load data from a CSV file."""
+    return pd.read_csv(data_path)
+
 
 def prep_data(data: pd.DataFrame):
     """
@@ -24,16 +32,26 @@ def prep_data(data: pd.DataFrame):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state = 42)
 
     # Save dataframes to their respective output file paths
-    save_dataframes(X_train, X_test, y_train, y_test, "./data/processed_data")
+    save_dataframes(X_train, X_test, y_train, y_test, "./data/processed")
 
 
 def save_dataframes(X_train, X_test, y_train, y_test, output_folderpath):
+    check_existing_folder(output_folderpath)
     # Save dataframes to their respective output file paths
     for file, filename in zip([X_train, X_test, y_train, y_test], ['X_train', 'X_test', 'y_train', 'y_test']):
         output_filepath = os.path.join(output_folderpath, f'{filename}.csv')
         if check_existing_file(output_filepath):
             file.to_csv(output_filepath, index=False)
             print(f"Saved data to {output_filepath}")
+
+
+def check_existing_folder(folder_path):
+
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+        print(f"Folder '{folder_path}' created.")
+    else:
+        print(f"Folder '{folder_path}' already exists.")
 
 
 def check_existing_file(file_path):
@@ -49,3 +67,11 @@ def check_existing_file(file_path):
                 print("Invalid response. Please enter 'y' or 'n'.")
     else:
         return True
+
+
+def main():
+    df = load_data("data\\raw_data\\raw.csv")
+    prep_data(df)
+
+if __name__ == "__main__":
+    main()

@@ -1,4 +1,5 @@
 
+import os
 from pathlib import Path
 from typing import IO
 
@@ -31,11 +32,25 @@ def save_best_parameters(data_path: str | Path | IO[bytes]) -> pd.DataFrame:
     )
     grid_search.fit(X_train_scaled, y_train)
 
+    check_existing_folder("./models")
+
     save_path = Path("./models/best_parameters.pkl")
     pd.to_pickle(pd.DataFrame([grid_search.best_params_]), save_path)
     print(f"Best parameters: {grid_search.best_params_}")
     print(f"Best parameters saved to {save_path}")
 
 
+def check_existing_folder(folder_path):
 
-    
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+        print(f"Folder '{folder_path}' created.")
+    else:
+        print(f"Folder '{folder_path}' already exists.")
+
+def main():
+    save_best_parameters("./data/processed")
+
+
+if __name__ == "__main__":
+    main()

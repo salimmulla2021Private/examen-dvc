@@ -1,6 +1,7 @@
 
 # Imports librairies
 
+import os
 from pathlib import Path
 from typing import IO
 
@@ -53,7 +54,21 @@ def model_evaluation(data_path: str | Path | IO[bytes]):
     # Save the evaluation metrics
     scores = {"MSE": mse, "R2": r2}
     scores_path = Path("./metrics/scores.json")
-    scores_path.parent.mkdir(parents=True, exist_ok=True)
+    check_existing_folder(scores_path.parent)
     pd.Series(scores).to_json(scores_path)
     logging.info(f"Evaluation metrics saved to {scores_path}")
     print(scores)
+
+def check_existing_folder(folder_path):
+
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+        print(f"Folder '{folder_path}' created.")
+    else:
+        print(f"Folder '{folder_path}' already exists.")
+        
+def main():
+    model_evaluation("./data/processed")
+
+if __name__ == "__main__":
+    main()

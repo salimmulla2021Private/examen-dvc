@@ -50,3 +50,10 @@ def train_data(data_path: str | Path | IO[bytes]):
     save_path = Path("./models/trained_model.pkl")
     pd.to_pickle(model, save_path)
     logging.info(f"Trained model saved to {save_path}")
+
+
+def main():
+    train_data("./data/processed")
+
+if __name__ == "__main__":
+    main()

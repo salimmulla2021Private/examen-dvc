@@ -44,3 +44,11 @@ def check_existing_file(file_path):
                 print("Invalid response. Please enter 'y' or 'n'.")
     else:
         return True
+
+
+def main():
+    normalize_data("data\\processed")
+
+
+if __name__ == "__main__":
+    main()

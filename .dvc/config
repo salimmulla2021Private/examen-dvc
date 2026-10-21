@@ -1,0 +1,8 @@
+[core]
+    analytics = true
+    remote = origin
+['remote "origin"']
+    url = https://dagshub.com/salimmulla2021Private/examen-dvc.dvc
+    auth = basic
+    user = salimmulla2021Private
+    password = 

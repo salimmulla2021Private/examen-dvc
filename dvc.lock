@@ -19,9 +19,9 @@ stages:
     outs:
     - path: data\processed
       hash: md5
-      md5: dc925e0033594aac99a3ffa8e3dab5c1.dir
-      size: 298137
-      nfiles: 4
+      md5: 62981a233c5573d46cefcbb780629cde.dir
+      size: 584293
+      nfiles: 6
   normalize:
     cmd: python src\data\data_normalization.py
     deps:
@@ -49,9 +49,9 @@ stages:
     outs:
     - path: models
       hash: md5
-      md5: baea2c778ac7d7527cb7e013f416a221.dir
-      size: 899
-      nfiles: 1
+      md5: e741a896b11485d8997e424022ce662b.dir
+      size: 8148391
+      nfiles: 2
   training:
     cmd: python src\data\data_training.py
     deps:
